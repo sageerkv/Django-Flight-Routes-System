@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Find Nth Node</title>
+    <link rel="stylesheet" href="{% static 'routes/style.css' %}">
+</head>
+<body>
+
+<div class="container">
+    <h2>Find Nth Left / Right Node</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Search</button>
+    </form>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    {% if result %}
+        <div class="success">
+            <p><b>Route:</b> {{ result.route_name }}</p>
+            <p><b>Airport:</b> {{ result.airport_code }}</p>
+            <p><b>Position:</b> {{ result.position }}</p>
+            <p><b>Duration:</b> {{ result.duration }}</p>
+        </div>
+    {% endif %}
+
+    <div class="nav-links">
+        <a href="{% url 'add_node' %}">Add Node</a>
+        <a href="{% url 'reports' %}">Reports</a>
+    </div>
+</div>
+
+</body>
+</html>

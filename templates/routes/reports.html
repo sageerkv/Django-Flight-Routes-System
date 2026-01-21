@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reports</title>
+    <link rel="stylesheet" href="{% static 'routes/style.css' %}">
+</head>
+<body>
+
+<div class="container">
+    <h2>Route Reports</h2>
+
+    <h3>Longest Duration Node</h3>
+    <form method="get">
+        <input type="text" name="route_name" placeholder="Route name (optional)" value="{{ route_name }}">
+        <button type="submit">Filter</button>
+    </form>
+
+    {% if longest_node %}
+        <div class="success">
+            <p><b>Route:</b> {{ longest_node.route_name }}</p>
+            <p><b>Airport:</b> {{ longest_node.airport_code }}</p>
+            <p><b>Duration:</b> {{ longest_node.duration }}</p>
+        </div>
+    {% endif %}
+
+    <h3>Shortest Node Between Two Airports</h3>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Find Shortest</button>
+    </form>
+
+    {% if shortest_error %}
+        <div class="error">{{ shortest_error }}</div>
+    {% endif %}
+
+    {% if shortest_between_node %}
+        <div class="success">
+            <p><b>Airport:</b> {{ shortest_between_node.airport_code }}</p>
+            <p><b>Position:</b> {{ shortest_between_node.position }}</p>
+            <p><b>Duration:</b> {{ shortest_between_node.duration }}</p>
+        </div>
+    {% endif %}
+
+    <div class="nav-links">
+        <a href="{% url 'add_node' %}">Add Node</a>
+        <a href="{% url 'find_nth_node' %}">Find Nth Node</a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Airport Route Node</title>
+    <link rel="stylesheet" href="{% static 'routes/style.css' %}">
+</head>
+<body>
+
+<div class="container">
+    <h2>Add Airport Route Node</h2>
+
+    {% if msg %}
+        <div class="success">{{ msg }}</div>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Add Node</button>
+    </form>
+
+    <h3>All Route Nodes</h3>
+    <table>
+        <tr>
+            <th>Route</th>
+            <th>Airport</th>
+            <th>Position</th>
+            <th>Duration</th>
+        </tr>
+        {% for n in nodes %}
+        <tr>
+            <td>{{ n.route_name }}</td>
+            <td>{{ n.airport_code }}</td>
+            <td>{{ n.position }}</td>
+            <td>{{ n.duration }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="nav-links">
+        <a href="{% url 'find_nth_node' %}">Find Nth Node</a>
+        <a href="{% url 'reports' %}">Reports</a>
+    </div>
+</div>
+
+</body>
+</html>
